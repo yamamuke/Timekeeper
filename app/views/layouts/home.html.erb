@@ -5,18 +5,15 @@
     <title>Time Recording App</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
     <%= render "layouts/header" %>
     <%= render "layouts/flash" %>
-    <div id="modalArea"></div>
-    <main>
-      <div class="container-fruid h-100 p-2 d-flex flex-column">
-        <%= yield %>      
+    <main class="bg-home d-flex align-items-center w-100 h-100">
+      <div class="container">
+            <%= yield %>
       </div>
     </main>
     <%= render "layouts/footer" %>

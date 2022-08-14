@@ -1,18 +1,19 @@
 class MinutesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_minute, only: [:show, :edit, :update, :destroy]
 
   # GET /minutes
   def index
-    @minutes = Minute.all
+    @minutes = current_user.minutes.all
   end
 
   # GET /minutes/1
-  def show
-  end
+  # def show
+  # end
 
   # GET /minutes/new
   def new
-    @minute = Minute.new
+    @minute = current_user.minutes.new
   end
 
   # GET /minutes/1/edit
@@ -21,37 +22,42 @@ class MinutesController < ApplicationController
 
   # POST /minutes
   def create
-    @minute = Minute.new(minute_params)
+    @minute = current_user.minutes.new(minute_params)
 
     if @minute.save
-      redirect_to @minute, notice: 'Minute was successfully created.'
+      #redirect_to @minute, notice: 'Minute was successfully created.'
+      @status = true
     else
-      render :new
+      #render :new
+      @status = false
     end
   end
 
   # PATCH/PUT /minutes/1
   def update
     if @minute.update(minute_params)
-      redirect_to @minute, notice: 'Minute was successfully updated.'
+      #redirect_to @minute, notice: 'Minute was successfully updated.'
+      @status = true
     else
-      render :edit
+      #render :edit
+      @status = false
     end
   end
 
   # DELETE /minutes/1
   def destroy
     @minute.destroy
-    redirect_to minutes_url, notice: 'Minute was successfully destroyed.'
+    #redirect_to minutes_url, notice: 'Minute was successfully destroyed.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_minute
-      @minute = Minute.find(params[:id])
+      #@minute = Minute.find(params[:id])
+      @minute = current_user.miutes.find_by(id: params[:id])
+      redirect_to(minutes_url, alert: "ERROR!!") if @minute.blank?
     end
 
-    # Only allow a trusted parameter "white list" through.
     def minute_params
       params.require(:minute).permit(:category, :content, :start, :stop, :total, :user_id)
     end

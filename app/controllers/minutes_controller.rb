@@ -54,7 +54,7 @@ class MinutesController < ApplicationController
 
     def set_minute
       #@minute = Minute.find(params[:id])
-      @minute = current_user.miutes.find_by(id: params[:id])
+      @minute = current_user.minutes.find_by(id: params[:id])
       redirect_to(minutes_url, alert: "ERROR!!") if @minute.blank?
     end
 

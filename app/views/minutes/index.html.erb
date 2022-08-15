@@ -1,15 +1,28 @@
 <p id="notice"><%= notice %></p>
 
-<h1>作業時間</h1>
+<h1>作業時間 [ <%= @minutes_date.present? ?
+  @minutes_date.first.created_at.strftime("%Y/%m/%d") : Date.current.strftime("%Y/%m/%d") %> ]
+</h1>
+
+<div id="stopwatch">
+  <p class="textfield"><button onclick=javascript:getStartTime();>Start</button></p>
+  <span id="startTime" class="align_v">00:00</span>
+  <p class="textfield"><button onclick="javascript:getStopTime();">Stop</button></p>
+  <span id="stopTime" class="align_v">00:00</span>
+  <span class="textfield">Elapsed time: </span>
+  <span id="interval" class="align_v">0</span><span>min</span>
+</div>
 
 <table>
   <thead>
     <tr>
-      <th>Category</th>
-      <th>Content</th>
-      <th>Start</th>
-      <th>Stop</th>
-      <th>Total</th>
+      <th>タイトル</th>
+      <th>作業内容</th>
+      <th></th>
+      <th>開始時間</th>
+      <th></th>
+      <th>終了時間</th>
+      <th>経過時間</th>
 <%
 =begin %>
       <th>User</th>
@@ -24,9 +37,11 @@
       <tr>
         <td><%= minute.category %></td>
         <td><%= minute.content %></td>
-        <td><%= minute.start %></td>
-        <td><%= minute.stop %></td>
-        <td><%= minute.total %></td>
+        <td><button onclick=javascript:getStartTime();>入力</button></td>
+        <td id="startTime"><%= minute.start %></td>
+        <td><button onclick=javascript:getStopTime();>入力</button></td>
+        <td id="stopTime"><%= minute.stop %></td>
+        <td id="interval"><%= minute.total %></td>
 <%
 =begin %>  
         <td><%= minute.user.email %></td> %>

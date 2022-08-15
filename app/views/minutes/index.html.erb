@@ -5,15 +5,19 @@
 </h1>
 
 <div id="stopwatch">
-  <p class="textfield"><button onclick=javascript:getStartTime();>Start</button></p>
+  <span onclick=javascript:getStartTime();>
+    <i class="fas fa-caret-square-right"></i>
+  </span>
   <span id="startTime" class="align_v">00:00</span>
-  <p class="textfield"><button onclick="javascript:getStopTime();">Stop</button></p>
+  <span onclick="javascript:getStopTime();">
+    <i class="fas fa-stop-circle"></i>
+  </span>
   <span id="stopTime" class="align_v">00:00</span>
   <span class="textfield">Elapsed time: </span>
   <span id="interval" class="align_v">0</span><span>min</span>
 </div>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>タイトル</th>
@@ -57,4 +61,68 @@
 
 <br>
 
-<%= link_to 'New Minute', new_minute_path %>
+<p class="btn">
+  <a href="/minutes/new">新しいアイテム</a>
+</p>
+
+<p class="total">カテゴリー別合計 :</p>
+<% @category_total.each{|key, value| %>
+  <% h = value / 60 %>
+  <% min = value % 60 %>
+  <table class="table mt-0 mb-0">
+    <ul>
+      <li class="time_category">
+        <% if h != 0 %>
+          <%= key + " : " + h.to_s + "h " + min.to_s + "min" %>
+        <% else %>
+          <%= key + " : " + min.to_s + "min" %>
+        <% end %>
+      </li>
+    </ul>
+  </table>
+<% } %>
+
+<% array = [] %>
+<% @minutes_date.each do |m| %>
+  <% array.push(m.getTimeDiff.to_s.delete(":Integer").to_i) %>
+<% end %>
+<% h = array.sum / 60 %>
+<% min = array.sum % 60 %>
+<% if h != 0 %>
+  <p class="total">すべてのカテゴリーの合計 : <%= h.to_s + "h " + min.to_s + "min" %></p>
+<% else %>
+  <p class="total">すべてのカテゴリーの合計 : <%= min.to_s + "min" %></p>
+<% end %>
+
+<p class="total"> 月ごとのカテゴリー別合計 
+  <%= @month.present? ? @month.first.created_at.strftime("%Y/%m") :
+    Date.current.strftime("%Y/%m") %> :
+</p>
+<% @category_month.each{|key, value| %>
+  <% h = value / 60 %>
+  <% min = value % 60 %>
+  <table class="table mt-0 mb-0">
+    <ul>
+      <li class="time_category">
+        <% if h != 0 %>
+          <%= key + " : " + h.to_s + "h " + min.to_s + "min" %>
+        <% else %>
+          <%= key + " : " + min.to_s + "min" %>
+        <% end %>
+      </li>
+    </ul>
+  </table>
+<% } %>
+
+<%= link_to "今日のリスト", minutes_path, class: 'btn btn-primary' %>
+<br>
+<hr>
+
+<div id="history">
+  <h2>履歴</h2>
+  <% array = @array.uniq %>
+  <% array.each do |arr| %>
+    <a href="/minutes/?date=<%= arr %>"><%= arr %></a>
+    <br>
+  <% end %>
+</div>

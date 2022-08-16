@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 2022_08_14_134211) do
   create_table "minutes", force: :cascade do |t|
     t.string "category"
     t.string "content"
-    t.time "start"
-    t.time "stop"
+    t.datetime "start"
+    t.datetime "stop"
     t.integer "total"
     t.integer "user_id"
     t.datetime "created_at", null: false

@@ -13,8 +13,8 @@ class MinutesController < ApplicationController
       @minutes_date = @minutes.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
     else
       @minutes_date = @minutes.where("created_at like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
-      @category_total = @minutes_date.group(:category).sum(:total)
     end
+    @category_total = @minutes_date.group(:category).sum(:total)
     if params['date'] != nil
       @month = @minutes.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
     else
@@ -30,6 +30,7 @@ class MinutesController < ApplicationController
   # GET /minutes/new
   def new
     @minute = current_user.minutes.new
+
   end
 
   # GET /minutes/1/edit

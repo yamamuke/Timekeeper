@@ -3,8 +3,8 @@ class CreateMinutes < ActiveRecord::Migration[5.2]
     create_table :minutes do |t|
       t.string :category
       t.string :content
-      t.time :start
-      t.time :stop
+      t.datetime :start
+      t.datetime :stop
       t.integer :total
       t.references :user, foreign_key: true
 

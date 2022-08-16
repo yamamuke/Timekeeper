@@ -4,15 +4,15 @@ class Minute < ApplicationRecord
   
   def getTimeDiff
     if (stop != nil)
-      ((stop - start) / 60).floor
+      self.total = ((stop - start) / 60).floor
     end
   end
-
-  def self.grandTotal
+  
+  def grandTotal
     sum(:total)
   end
 
-  def self.categoryTotal
+  def categoryTotal
    Minute.group(:category).sum(:total)
   end
 end

@@ -6,24 +6,19 @@ class MinutesController < ApplicationController
   def index
     @minutes = current_user.minutes.all
     @array = []
-    #@current_user.select(:created_at).each{|item|
-    Minute.select(:created_at).each{|item|
+    @minutes.select(:created_at).each{|item|
       @array.push(item.created_at.strftime("%Y/%m/%d"))
     }
     if params['date'] != nil
-      #@minutes_date = @current_user.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
-      @minutes_date = Minute.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
     else
-     #@minutes_date = @current_user.where("created_at like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
-     @minutes_date = Minute.where("created_at like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("created_at like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @category_total = @minutes_date.group(:category).sum(:total)
     end
-    @category_total = @minutes_date.group(:category).sum(:total)
     if params['date'] != nil
-      #@month = @current_user.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
-      @month = Minute.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
+      @month = @minutes.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
     else
-      #@month = @current_user.where("created_at like?", Date.current.in_time_zone.strftime("%Y-%m") + '%')
-      @month = Minute.where("created_at like?", Date.current.in_time_zone.strftime("%Y-%m") + '%')
+      @month = @minutes.where("created_at like?", Date.current.in_time_zone.strftime("%Y-%m") + '%')
     end
     @category_month = @month.group(:category).sum(:total)
   end
@@ -39,15 +34,18 @@ class MinutesController < ApplicationController
 
   # GET /minutes/1/edit
   def edit
+    @minute.total = @minute.getTimeDiff
+    @minute.save
   end
 
   # POST /minutes
   def create
     @minute = current_user.minutes.new(minute_params)
-
     if @minute.save
       #redirect_to @minute, notice: 'Minute was successfully created.'
       @status = true
+      @minute.total = @minute.getTimeDiff
+      @minute.save
     else
       #render :new
       @status = false
@@ -74,7 +72,6 @@ class MinutesController < ApplicationController
   private
 
     def set_minute
-      #@minute = Minute.find(params[:id])
       @minute = current_user.minutes.find_by(id: params[:id])
       redirect_to(minutes_url, alert: "ERROR!!") if @minute.blank?
     end

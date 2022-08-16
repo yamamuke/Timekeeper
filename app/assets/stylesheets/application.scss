@@ -20,3 +20,21 @@
 @import "devise";
 @import "scaffolds";
 @import "minutes";
+
+header {
+  height: 60px;
+}
+
+main {
+  margin: 20px;
+  padding: 20px;
+  min-height: calc(100vh - 90px);
+  width: calc(100vw - 70px);
+  overflow-y: scroll;
+}
+
+footer {
+  height: 30px;
+}
+
+

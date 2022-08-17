@@ -20,8 +20,6 @@
 //= require popper
 //= require bootstrap-sprockets
 
-console.log('test');
-
 let startTime;
 let stopTime;
 

@@ -29,7 +29,7 @@ class MinutesController < ApplicationController
 
   # GET /minutes/new
   def new
-    @minute = current_user.minutes.new
+    @minute = current_user.minutes.new({ :start => Time.now - 3600 })
 
   end
 

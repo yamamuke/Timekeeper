@@ -1,0 +1,135 @@
+<div id="stopwatch">
+  <span onclick=javascript:getStartTime();>
+    <i class="fas fa-caret-square-right"></i>
+  </span>
+  <span id="startTime" class="align_v">00:00</span>
+  <span onclick="javascript:getStopTime();">
+    <i class="fas fa-stop-circle"></i>
+  </span>
+  <span id="stopTime" class="align_v">00:00</span>
+  <span class="textfield">経過時間: </span>
+  <span id="interval" class="align_v">0</span><span>min</span>
+</div>
+
+<div class="mg10">
+  <%= link_to new_minute_path, title: "New", class: "btn p-0", remote: true do %>
+    <span class="btn btn-primary">新しいアイテム</span>
+  <% end %>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>カテゴリー</th>
+      <th>作業内容</th>
+      <th></th>
+      <th>開始時間</th>
+      <th></th>
+      <th>終了時間</th>
+      <th>作業時間(min)</th>
+<%
+=begin %>
+      <th>User</th>
+<%
+=end %>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @minutes.each do |minute| %>
+      <tr>
+        <td><%= minute.category %></td>
+        <td><%= minute.content %></td>
+        <td><button onclick=javascript:getStartTime();>入力</button></td>
+        <td id="startTime"><%= minute.start.strftime("%Y/%m/%d %H:%M") %></td>
+        <td><button onclick=javascript:getStopTime();>入力</button></td>
+        <td id="stopTime"><%= minute.stop.strftime("%Y/%m/%d %H:%M") %></td>
+        <td ><%= minute.getTimeDiff %></td>
+<%
+=begin %>  
+        <td><%= minute.user.email %></td> %>
+        <td><%= link_to 'Show', minute %></td>
+<%
+=end %>
+        <td>
+          <%= link_to edit_minute_path(minute), title: "Edit", class: "btn btn-outline-primary p-0", remote: true do %>
+            <span class="btn">修正</span>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to '削除', minute, method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-outline-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<p class="btn-minutes">
+  <a href="/minutes/new">新しいアイテム</a>
+</p>
+
+<p class="total">カテゴリー別合計 :</p>
+<% @category_total.each{|key, value| %>
+  <% h = value / 60 %>
+  <% min = value % 60 %>
+  <table class="table mt-0 mb-0">
+    <ul>
+      <li class="time_category">
+        <% if h != 0 %>
+          <%= key + " : " + h.to_s + "h " + min.to_s + "min" %>
+        <% else %>
+          <%= key + " : " + min.to_s + "min" %>
+        <% end %>
+      </li>
+    </ul>
+  </table>
+<% } %>
+
+<% array = [] %>
+<% @minutes_date.each do |m| %>
+  <% array.push(m.getTimeDiff.to_s.delete(":Integer").to_i) %>
+<% end %>
+<% h = array.sum / 60 %>
+<% min = array.sum % 60 %>
+<% if h != 0 %>
+  <p class="total">すべてのカテゴリーの合計 : </p>
+  <p class="time_category pl-4"><%= h.to_s + "h " + min.to_s + "min" %></p>
+<% else %>
+  <p class="total">すべてのカテゴリーの合計 : </p>
+  <p class="time_category pl-4"><%= min.to_s + "min" %></p>
+<% end %>
+
+<p class="total"> 月ごとのカテゴリー別合計 
+  <%= @month.present? ? @month.first.created_at.strftime("%Y/%m") :
+    Date.current.strftime("%Y/%m") %> :</p>
+<% @category_month.each{|key, value| %>
+  <% h = value / 60 %>
+  <% min = value % 60 %>
+  <table class="table mt-0 mb-0">
+    <ul>
+      <li class="time_category">
+        <% if h != 0 %>
+          <%= key + " : " + h.to_s + "h " + min.to_s + "min" %>
+        <% else %>
+          <%= key + " : " + min.to_s + "min" %>
+        <% end %>
+      </li>
+    </ul>
+  </table>
+<% } %>
+
+<%= link_to "今日のリスト", minutes_path, class: "btn outline btn-primary" %>
+<br>
+<hr>
+
+<div id="history">
+  <h2>履歴</h2>
+  <% array = @array.uniq %>
+  <% array.each do |arr| %>
+    <a href="/minutes/?date=<%= arr %>"><%= arr %></a>
+    <br>
+  <% end %>
+</div>

@@ -1,0 +1,13 @@
+//modalを閉じる処理
+$("#minuteModal").modal("hide");
+$('body').removeClass('modal-open');
+$('.modal-backdrop).remove();
+
+//Rails @status => true 画面の書き換え : false モーダルを再度表示
+<% if @status %>
+  $("#minutesIndex").append("<%= escape_javascript(render @minute) %>");
+<% else %>
+  $("#modalArea").html("<%= escape_javascript(render 'minutes/form, minute: @minute') %>");
+  $("#modalArea").find(".modal").modal('show');
+<% end %>
+

@@ -12,41 +12,40 @@
   padding: 10px;
 }
 
-/*新規アイテム作成などのボタン*/
-.btn {
-  width:150px;
-  height:35px;
-}
-
-.btn a {
-  display:block;
-  width:100%;
-  height:100%;
-  text-decoration: none;
-  background:#668ad8;
-  text-align:center;
-  color:#FFFFFF;
-  font-size:15px;
-  font-style:oblique;
-  box-shadow:3px 3px 0px 0px #5375bd;
-}
-
-.btn a:hover {
-  background:#668ad8;
-  color:#FFFFFF;
-  margin-left:3px;
-  margin-top:3px;
-  box-shadow:none;
-}
-
-.btn.outline {
-    color: #ffffff;
-}
-
 h1 {
   font-size: 28px;
 }
 
 h2 {
   font-size: 20px;
+}
+
+.time_category {
+  font-size: 15px;
+}
+
+#history {
+  font-size: 20px;
+}
+
+#history > h2 {
+  font-weight: bold;
+}
+
+#history > a {
+  font-size: 15px;
+  color: #3399FF;
+}
+.frame {
+  padding: 3px;
+  border: 0.5px solid ;
+}
+
+.total {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.table btn-outline-danger {
+  color: ff0000 !important;
 }

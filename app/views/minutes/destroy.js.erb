@@ -1,0 +1,7 @@
+// modalを閉じる処理
+$("#minuteModal").modal("hide");
+$("body").removeclass("modal-open");
+$(".modal-backdrop").remove();
+
+// 画面の書き換え
+$('[data-model_name="minute"]').filter('[data-id="<%= @minute.id %>"]').remove();

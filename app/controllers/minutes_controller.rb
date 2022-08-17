@@ -30,7 +30,6 @@ class MinutesController < ApplicationController
   # GET /minutes/new
   def new
     @minute = current_user.minutes.new({ :start => Time.now - 3600 })
-
   end
 
   # GET /minutes/1/edit
@@ -43,10 +42,10 @@ class MinutesController < ApplicationController
   def create
     @minute = current_user.minutes.new(minute_params)
     if @minute.save
-      #redirect_to @minute, notice: 'Minute was successfully created.'
       @status = true
       @minute.total = @minute.getTimeDiff
       @minute.save
+      redirect_to minutes_url
     else
       #render :new
       @status = false
@@ -56,8 +55,8 @@ class MinutesController < ApplicationController
   # PATCH/PUT /minutes/1
   def update
     if @minute.update(minute_params)
-      #redirect_to @minute, notice: 'Minute was successfully updated.'
       @status = true
+      redirect_to minutes_url
     else
       #render :edit
       @status = false
@@ -67,7 +66,7 @@ class MinutesController < ApplicationController
   # DELETE /minutes/1
   def destroy
     @minute.destroy
-    #redirect_to minutes_url, notice: 'Minute was successfully destroyed.'
+    redirect_to minutes_url
   end
 
   private

@@ -24,5 +24,7 @@ module TimelogApp
       Devise::PasswordsController.layout "devise"
       HomeController.layout "home"
     end
+    
+    config.time_zone = 'Tokyo'
   end
 end

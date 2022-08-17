@@ -10,9 +10,9 @@ class MinutesController < ApplicationController
       @array.push(item.created_at.strftime("%Y/%m/%d"))
     }
     if params['date'] != nil
-      @minutes_date = @minutes.where("created_at like::text ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("created_at::text like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
     else
-      @minutes_date = @minutes.where("created_at like::text ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("created_at::text like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
     end
     @category_total = @minutes_date.group(:category).sum(:total)
     if params['date'] != nil

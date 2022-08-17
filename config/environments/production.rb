@@ -93,4 +93,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  
+  #Enable harmony mode by Uglifier.new(:harmony => true) to use JavaScript ES6 
+  config.assets.js_compressor = Uglifier.new(harmony: true)
 end

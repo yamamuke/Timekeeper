@@ -1,5 +1,7 @@
 {
   "name": "timelog_app",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "heroku": "^7.62.0"
+  }
 }

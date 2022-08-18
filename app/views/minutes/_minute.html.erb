@@ -22,9 +22,7 @@
     <tr>
       <th>カテゴリー</th>
       <th>作業内容</th>
-      <th></th>
       <th>開始時間</th>
-      <th></th>
       <th>終了時間</th>
       <th>作業時間(min)</th>
 <%
@@ -46,12 +44,12 @@
         <td ><%= minute.getTimeDiff %></td>
 
         <td>
-          <%= link_to edit_minute_path(minute), title: "Edit", class: "btn btn-outline-primary p-0", remote: true do %>
+          <%= link_to edit_minute_path(minute), title: "Edit", class: "btn btn-outline-primary w-50px p-0", remote: true do %>
             <span class="btn">修正</span>
           <% end %>
         </td>
         <td>
-          <%= link_to '削除', minute, method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-outline-danger" %>
+          <%= link_to '削除', minute, method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-outline-danger w-50px" %>
         </td>
       </tr>
     <% end %>

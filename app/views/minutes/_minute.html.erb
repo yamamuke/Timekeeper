@@ -41,17 +41,10 @@
       <tr>
         <td><%= minute.category %></td>
         <td><%= minute.content %></td>
-        <td><button onclick=javascript:getStartTime();>入力</button></td>
         <td id="startTime"><%= minute.start.strftime("%Y/%m/%d %H:%M") %></td>
-        <td><button onclick=javascript:getStopTime();>入力</button></td>
         <td id="stopTime"><%= minute.stop.strftime("%Y/%m/%d %H:%M") %></td>
         <td ><%= minute.getTimeDiff %></td>
-<%
-=begin %>  
-        <td><%= minute.user.email %></td> %>
-        <td><%= link_to 'Show', minute %></td>
-<%
-=end %>
+
         <td>
           <%= link_to edit_minute_path(minute), title: "Edit", class: "btn btn-outline-primary p-0", remote: true do %>
             <span class="btn">修正</span>

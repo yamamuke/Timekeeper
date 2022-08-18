@@ -1,4 +1,8 @@
+<%
+=begin %>
 <p id="notice"><%= notice %></p>
+<%
+=end %>
 
 <h1>作業時間記録 [ <%= @minutes_date.present? ?
   @minutes_date.first.created_at.strftime("%Y/%m/%d") : Date.current.strftime("%Y/%m/%d") %> ]

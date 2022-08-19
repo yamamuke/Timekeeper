@@ -12,10 +12,12 @@
   </head>
 
   <body>
+    <%= render "layouts/flash" %>
     <%= render "layouts/header" %>
     <%#= render "layouts/flash" %>
     <div id="modalArea"></div>
     <main>
+      <div>
         <%= yield %>      
       </div>
     </main>

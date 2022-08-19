@@ -10,15 +10,15 @@ class MinutesController < ApplicationController
       @array.push(item.created_at.strftime("%Y/%m/%d"))
     }
     if params['date'] != nil
-      @minutes_date = @minutes.where("to_char(created_at, 'YYYY-MM-DD') like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
     else
-      @minutes_date = @minutes.where("to_char(created_at, 'YYYY-MM-DD') like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("created_at like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
     end
     @category_total = @minutes_date.group(:category).sum(:total)
     if params['date'] != nil
-      @month = @minutes.where("to_char(created_at, 'YYYY-MM-DD') like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
+      @month = @minutes.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
     else
-      @month = @minutes.where("to_char(created_at, 'YYYY-MM-DD') like ?", Date.current.in_time_zone.strftime("%Y-%m") + '%')
+      @month = @minutes.where("created_at like ?", Date.current.in_time_zone.strftime("%Y-%m") + '%')
     end
     @category_month = @month.group(:category).sum(:total)
   end
@@ -29,7 +29,7 @@ class MinutesController < ApplicationController
 
   # GET /minutes/new
   def new
-    @minute = current_user.minutes.new({ :start => Time.now - 3600 })
+    @minute = current_user.minutes.new({ :stop => Time.now + 3600 })
   end
 
   # GET /minutes/1/edit
@@ -56,7 +56,8 @@ class MinutesController < ApplicationController
   def update
     if @minute.update(minute_params)
       @status = true
-      redirect_to minutes_url
+      @minute_ed = @minute.start.strftime("%Y-%m-%d") 
+      redirect_to "/minutes/?date=#{@minute_ed}"
     else
       #render :edit
       @status = false
@@ -66,7 +67,8 @@ class MinutesController < ApplicationController
   # DELETE /minutes/1
   def destroy
     @minute.destroy
-    redirect_to minutes_url
+    @minute_dl = @minute.start.strftime("%Y-%m-%d")
+    redirect_to "/minutes/?date=#{@minute_dl}"
   end
 
   private

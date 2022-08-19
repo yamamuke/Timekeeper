@@ -35,7 +35,7 @@
   </thead>
 
   <tbody>
-    <% @minutes.each do |minute| %>
+    <% @minutes_date.each do |minute| %>
       <tr>
         <td><%= minute.category %></td>
         <td><%= minute.content %></td>
@@ -58,7 +58,7 @@
 
 <br>
 
-<p class="total">カテゴリー別合計 :</p>
+<p class="total">今日のカテゴリー別合計 :</p>
 <% @category_total.each{|key, value| %>
   <% h = value / 60 %>
   <% min = value % 60 %>
@@ -82,14 +82,14 @@
 <% h = array.sum / 60 %>
 <% min = array.sum % 60 %>
 <% if h != 0 %>
-  <p class="total">すべてのカテゴリーの合計 : </p>
+  <p class="total">今日のすべてのカテゴリーの合計 : </p>
   <p class="time_category pl-4"><%= h.to_s + "h " + min.to_s + "min" %></p>
 <% else %>
-  <p class="total">すべてのカテゴリーの合計 : </p>
+  <p class="total">今日のすべてのカテゴリーの合計 : </p>
   <p class="time_category pl-4"><%= min.to_s + "min" %></p>
 <% end %>
 
-<p class="total"> 月ごとのカテゴリー別合計 
+<p class="total"> 今月のカテゴリー別合計 
   <%= @month.present? ? @month.first.created_at.strftime("%Y/%m") :
     Date.current.strftime("%Y/%m") %> :</p>
 <% @category_month.each{|key, value| %>

@@ -36,6 +36,8 @@ class MinutesController < ApplicationController
   def edit
     @minute.total = @minute.getTimeDiff
     @minute.save
+    @minute_ed = @minute.start.strftime("%Y-%m-%d") 
+    redirect_to "/minutes/?date=#{@minute_ed}"
   end
 
   # POST /minutes

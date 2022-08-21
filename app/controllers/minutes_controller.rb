@@ -10,15 +10,15 @@ class MinutesController < ApplicationController
       @array.push(item.start.strftime("%Y/%m/%d"))
     }
     if params['date'] != nil
-      @minutes_date = @minutes.where("start like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
     else
-      @minutes_date = @minutes.where("start like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
     end
     @category_total = @minutes_date.group(:category).sum(:total)
     if params['date'] != nil
-      @month = @minutes.where("start like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
+      @month = @minutes.where("to_char(start, 'YYYY-MM-DD')like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
     else
-      @month = @minutes.where("start like ?", Date.current.in_time_zone.strftime("%Y-%m") + '%')
+      @month = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", Date.current.in_time_zone.strftime("%Y-%m") + '%')
     end
     @category_month = @month.group(:category).sum(:total)
   end

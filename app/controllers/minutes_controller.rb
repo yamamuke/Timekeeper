@@ -6,19 +6,19 @@ class MinutesController < ApplicationController
   def index
     @minutes = current_user.minutes.all
     @array = []
-    @minutes.select(:created_at).each{|item|
-      @array.push(item.created_at.strftime("%Y/%m/%d"))
+    @minutes.select(:start).each{|item|
+      @array.push(item.start.strftime("%Y/%m/%d"))
     }
     if params['date'] != nil
-      @minutes_date = @minutes.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("start like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
     else
-      @minutes_date = @minutes.where("created_at like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("start like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
     end
     @category_total = @minutes_date.group(:category).sum(:total)
     if params['date'] != nil
-      @month = @minutes.where("created_at like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
+      @month = @minutes.where("start like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
     else
-      @month = @minutes.where("created_at like ?", Date.current.in_time_zone.strftime("%Y-%m") + '%')
+      @month = @minutes.where("start like ?", Date.current.in_time_zone.strftime("%Y-%m") + '%')
     end
     @category_month = @month.group(:category).sum(:total)
   end
@@ -47,7 +47,6 @@ class MinutesController < ApplicationController
       @minute.save
       redirect_to minutes_url
     else
-      #render :new
       @status = false
     end
   end
@@ -59,7 +58,6 @@ class MinutesController < ApplicationController
       @minute_ed = @minute.start.strftime("%Y-%m-%d") 
       redirect_to "/minutes/?date=#{@minute_ed}"
     else
-      #render :edit
       @status = false
     end
   end

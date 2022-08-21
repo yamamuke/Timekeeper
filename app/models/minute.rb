@@ -1,6 +1,6 @@
 class Minute < ApplicationRecord
   belongs_to :user
-  validates :category, presence: { message: 'カテゴリーは必須項目です。' }
+  validates :category, presence: true
 
   def getTimeDiff
     if (stop != nil)

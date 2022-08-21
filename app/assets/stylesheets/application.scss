@@ -46,6 +46,10 @@ footer {
   height:35px;
 }
 
+.flex {
+  display: flex;
+}
+
 .btn-minutes a {
   display:block;
   width:100%;
@@ -74,4 +78,13 @@ footer {
 
 .mg10 {
   margin: 10px;
+}
+
+.modal-body > span {
+  color: #ff0000 !important;
+  font-weight: bold;
+}
+
+.first-form-group {
+  margin-top: 10px;
 }

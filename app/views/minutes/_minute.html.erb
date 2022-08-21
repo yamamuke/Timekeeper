@@ -1,15 +1,15 @@
-<div id="stopwatch">
-  <span onclick=javascript:getStartTime();>
-    <i class="fas fa-caret-square-right"></i>
-  </span>
-  <span id="startTime" class="align_v">00:00</span>
-  <span onclick="javascript:getStopTime();">
-    <i class="fas fa-stop-circle"></i>
-  </span>
-  <span id="stopTime" class="align_v">00:00</span>
-  <span class="textfield">経過時間: </span>
-  <span id="interval" class="align_v">0</span><span>min</span>
-</div>
+<!--<div id="stopwatch">-->
+<!--  <span onclick=javascript:getStartTime();>-->
+<!--    <i class="fas fa-caret-square-right"></i>-->
+<!--  </span>-->
+<!--  <span id="startTime" class="align_v">00:00</span>-->
+<!--  <span onclick="javascript:getStopTime();">-->
+<!--    <i class="fas fa-stop-circle"></i>-->
+<!--  </span>-->
+<!--  <span id="stopTime" class="align_v">00:00</span>-->
+<!--  <span class="textfield">経過時間: </span>-->
+<!--  <span id="interval" class="align_v">0</span><span>min</span>-->
+<!--</div>-->
 
 <div class="mg10">
   <%= link_to new_minute_path, title: "New", class: "btn p-0", remote: true do %>
@@ -23,6 +23,7 @@
       <th>カテゴリー</th>
       <th>作業内容</th>
       <th>開始時間</th>
+      <th></th>
       <th>終了時間</th>
       <th>作業時間(min)</th>
 <%
@@ -40,9 +41,19 @@
         <td><%= minute.category %></td>
         <td><%= minute.content %></td>
         <td id="startTime"><%= minute.start.strftime("%Y/%m/%d %H:%M") %></td>
-        <td id="stopTime"><%= minute.stop.strftime("%Y/%m/%d %H:%M") %></td>
+        <td>
+          <%= link_to edit_minute_path(minute), title: "End", remote: true do %>
+            <span class="btn btn-primary">終了</span>
+          <% end %>
+        </td>
+        <td id="stopTime">
+          <% if minute.stop == nil %>
+            作業中
+          <% else %>
+            <%= minute.stop.strftime("%Y/%m/%d %H:%M") %>
+          <% end %>
+        </td>
         <td ><%= minute.getTimeDiff %></td>
-
         <td>
           <%= link_to edit_minute_path(minute), title: "Edit", class: "btn btn-outline-primary w-50px p-0", remote: true do %>
             <span class="btn">修正</span>

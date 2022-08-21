@@ -7,6 +7,6 @@ $('.modal-backdrop').remove();
 <% if @status %>
   $('[data-model_name'="minute"]').filter('[data-id="<%= @minute.id %>"]').replaceWith("<%= escape_javascript(render @minute) %>");
 <% else %>
-  $("#modalArea").html("<%= escape_javascript(render 'form', minute: @minute) %>")
+  $("#modalArea").html(<%= escape_javascript(render 'form', minute: @minute) %>")
   $("#modalArea").find(".modal").modal('show')
 <% end %>

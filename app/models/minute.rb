@@ -7,12 +7,4 @@ class Minute < ApplicationRecord
       self.total = ((stop - start) / 60).floor
     end
   end
-  
-  def grandTotal
-    sum(:total)
-  end
-
-  def categoryTotal
-   Minute.group(:category).sum(:total)
-  end
 end

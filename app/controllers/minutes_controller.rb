@@ -1,7 +1,7 @@
 class MinutesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_minute, only: [:show, :edit, :update, :destroy]
-
+    
   # GET /minutes
   def index
     @minutes = current_user.minutes.all
@@ -10,15 +10,15 @@ class MinutesController < ApplicationController
       @array.push(item.start.strftime("%Y/%m/%d"))
     }
     if params['date'] != nil
-      @minutes_date = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("start like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m-%d") + '%')
     else
-      @minutes_date = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
+      @minutes_date = @minutes.where("start like ?", Date.current.in_time_zone.strftime("%Y-%m-%d") + '%')
     end
     @category_total = @minutes_date.group(:category).sum(:total)
     if params['date'] != nil
-      @month = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
+      @month = @minutes.where("start like ?", params['date'].to_date.in_time_zone.strftime("%Y-%m") + '%')
     else
-      @month = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", Date.current.in_time_zone.strftime("%Y-%m") + '%')
+      @month = @minutes.where("start like ?", Date.current.in_time_zone.strftime("%Y-%m") + '%')
     end
     @category_month = @month.group(:category).sum(:total)
   end
@@ -29,7 +29,7 @@ class MinutesController < ApplicationController
 
   # GET /minutes/new
   def new
-    @minute = current_user.minutes.new({ :stop => Time.now + 3600 })
+    @minute = current_user.minutes.new
   end
 
   # GET /minutes/1/edit
@@ -43,9 +43,8 @@ class MinutesController < ApplicationController
     @minute = current_user.minutes.new(minute_params)
     if @minute.save
       @status = true
-      @minute.total = @minute.getTimeDiff
-      @minute.save
-      redirect_to minutes_url
+      @minute_new = @minute.start.strftime("%Y-%m-%d") 
+      redirect_to "/minutes/?date=#{@minute_new}"
     else
       @status = false
     end
@@ -55,6 +54,8 @@ class MinutesController < ApplicationController
   def update
     if @minute.update(minute_params)
       @status = true
+      @minute.total = @minute.getTimeDiff
+      @minute.save
       @minute_ed = @minute.start.strftime("%Y-%m-%d") 
       redirect_to "/minutes/?date=#{@minute_ed}"
     else

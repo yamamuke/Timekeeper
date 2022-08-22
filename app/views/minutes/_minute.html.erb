@@ -68,10 +68,10 @@
 </table>
 
 <br>
-<% if params['date'] == nil %>
+<% if params['date'] == nil || params['date'] == Date.current.in_time_zone.localtime.strftime("%Y-%m-%d") %>
   <p class="total">今日のカテゴリー別合計 :</p>
 <% else %>
-  <p class="total"><%= params['date'].to_date.in_time_zone.strftime("%Y/%m/%d") %> のカテゴリー別合計 :</p>
+  <p class="total"><%= params['date'].to_date.in_time_zone.localtime.strftime("%Y/%m/%d") %> のカテゴリー別合計 :</p>
 <% end %>
 <% @category_total.each{|key, value| %>
   <% h = value / 60 %>
@@ -96,23 +96,23 @@
 <% h = array_all.sum / 60 %>
 <% min = array_all.sum % 60 %>
 <% if h != 0 %>
-  <% if params['date'] == nil %>
+  <% if params['date'] == nil || params['date'] == Date.current.in_time_zone.localtime.strftime("%Y-%m-%d") %>
     <p class="total">今日のすべてのカテゴリーの合計 : </p>
   <% else %>
-    <p class="total"><p class="total"><%= params['date'].to_date.in_time_zone.strftime("%Y/%m/%d") %> のすべてのカテゴリーの合計 : </p>
+    <p class="total"><p class="total"><%= params['date'].to_date.in_time_zone.localtime.strftime("%Y/%m/%d") %> のすべてのカテゴリーの合計 : </p>
   <% end %>  
   <p class="time_category pl-4"><%= h.to_s + "h " + min.to_s + "min" %></p>
 <% else %>
   <% if params['date'] == nil %>
     <p class="total">今日のすべてのカテゴリーの合計 : </p>
   <% else %>
-    <p class="total"><p class="total"><%= params['date'].to_date.in_time_zone.strftime("%Y/%m/%d") %> のすべてのカテゴリーの合計 : </p>
+    <p class="total"><p class="total"><%= params['date'].to_date.in_time_zone.localtime.strftime("%Y/%m/%d") %> のすべてのカテゴリーの合計 : </p>
   <% end %>
     <p class="time_category pl-4"><%= min.to_s + "min" %></p>
 <% end %>
 
 <p class="total"> 今月のカテゴリー別合計 
-  <%= @month.present? ? @month.first.created_at.strftime("%Y/%m") :
+  <%= @month.present? ? @month.first.start.localtime.strftime("%Y/%m") :
     Date.current.strftime("%Y/%m") %> :</p>
 <% @category_month.each{|key, value| %>
   <% h = value / 60 %>

@@ -9,7 +9,6 @@ Bundler.require(*Rails.groups)
 module TimelogApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.time_zone = 'Tokyo'
     config.load_defaults 5.2
 
     # Settings in config/environments/* take precedence over those specified here.
@@ -28,5 +27,8 @@ module TimelogApp
     
     config.i18n.default_locale = :ja
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+    config.time_zone = 'Asia/Tokyo'
+    config.active_record.default_timezone = :local
+    
   end
 end

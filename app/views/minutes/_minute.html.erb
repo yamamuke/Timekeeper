@@ -136,7 +136,7 @@
 
 <div id="history">
   <h2>履歴</h2>
-  <% array = @array.uniq %>
+  <% array = @array.sort.uniq %>
   <% array.each do |arr| %>
     <a href="/minutes/?date=<%= arr %>"><%= arr %></a>
     <br>

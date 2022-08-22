@@ -5,7 +5,7 @@
 =end %>
 
 <h1 style="margin-bottom: 20px">作業時間記録 [ <%= @minutes_date.present? ?
-  @minutes_date.first.created_at.strftime("%Y/%m/%d") : Date.current.strftime("%Y/%m/%d") %> ]
+  @minutes_date.first.start.strftime("%Y/%m/%d") : Date.current.strftime("%Y/%m/%d") %> ]
 </h1>
 
 <div>

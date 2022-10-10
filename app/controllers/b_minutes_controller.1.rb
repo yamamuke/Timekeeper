@@ -6,10 +6,9 @@ class MinutesController < ApplicationController
   def index
     @minutes = current_user.minutes.all
     @array = []
-    @minutes.each{|item|
-      @array.push(item.start.strftime("%Y-%m-%d"))
+    @minutes.select(:start).each{|item|
+      @array.push(item.start.strftime("%Y/%m/%d"))
     }
-    @array = @array.uniq.sort
     if params['date'] != nil
       @minutes_date = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", params['date'].to_date.in_time_zone.localtime.strftime("%Y-%m-%d") + '%')
     else

@@ -138,7 +138,7 @@
   <h2>履歴</h2>
   <% @array.each do |arr| %>
     <a href="/minutes/?date=<%= arr %>"><%= arr.to_date.in_time_zone.localtime.strftime("%Y/%m/%d") %></a>
-    <% date = @minutes.where("start like ?", arr.to_date.in_time_zone.localtime.strftime("%Y-%m-%d") + '%') %>
+    <% date = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", arr.to_date.in_time_zone.localtime.strftime("%Y-%m-%d") + '%') %>
     <span id="category_hist">
       <%= date.pluck(:category).uniq.join(", ") %>
     </span>

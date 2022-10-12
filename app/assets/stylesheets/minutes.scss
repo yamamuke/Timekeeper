@@ -32,7 +32,21 @@ h2 {
   font-weight: bold;
 }
 
-#history > a {
+#history > ul {
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  color: #3399FF;
+}
+
+#history li {
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  color: #3399FF;
+}
+
+#history a {
   font-size: 15px;
   color: #3399FF;
 }
@@ -60,5 +74,11 @@ h2 {
 
 #category_hist {
   margin-left: 20px;
+  color: #000000;
   font-size: 15px;
+}
+
+#month {
+  font-size: 20px;
+  color: #0000ff;
 }

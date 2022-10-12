@@ -10,6 +10,11 @@ class MinutesController < ApplicationController
       @array.push(item.start.strftime("%Y-%m-%d"))
     }
     @array = @array.uniq.sort
+    @array_m = []
+    @minutes.each{|month|
+      @array_m.push(month.start.strftime("%Y-%m"))
+    }
+    @array_m = @array_m.uniq.sort.reverse
     if params['date'] != nil
       @minutes_date = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", params['date'].to_date.in_time_zone.localtime.strftime("%Y-%m-%d") + '%')
     else

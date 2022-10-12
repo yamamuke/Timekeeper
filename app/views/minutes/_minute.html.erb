@@ -134,14 +134,48 @@
 <br>
 <hr>
 
+<%
+=begin %>
 <div id="history">
   <h2>履歴</h2>
   <% @array.each do |arr| %>
     <a href="/minutes/?date=<%= arr %>"><%= arr.to_date.in_time_zone.localtime.strftime("%Y/%m/%d") %></a>
-    <% date = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", arr.to_date.in_time_zone.localtime.strftime("%Y-%m-%d") + '%') %>
+    <% date = @minutes.where("start like ?", arr.to_date.in_time_zone.localtime.strftime("%Y-%m-%d") + '%') %>
     <span id="category_hist">
       <%= date.pluck(:category).uniq.join(", ") %>
     </span>
     <br>
+  <% end %>
+<%
+=end %>
+
+<div id="history">
+  <h2>履歴</h2>
+  <% @array_m.each do |month| %>
+    <ul>
+      <li>
+        <span id="month">
+          <%= (month + "-01").to_date.in_time_zone.localtime.strftime("%Y/%m") %>   
+        </span> 
+        <% date_of_m = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", month + '%') %>
+        <% date_of_m = date_of_m.sort {|x, y| x["start"] <=> y["start"]} %>
+        <% darray = [] %>
+        <% date_of_m.each do |item| %>
+          <% darray.push(item.start.strftime("%Y/%m/%d").to_s) %>
+        <% end %>
+        <% date_of_m = darray.uniq %>
+        <% date_of_m.each do |arr| %>
+          <ul>
+            <li>
+              <a href="/minutes/?date=<%= arr %>"><%= arr %></a>
+              <% date = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", arr.to_date.in_time_zone.localtime.strftime("%Y-%m-%d") + '%') %>
+              <span id="category_hist">
+                <%= date.pluck(:category).uniq.join(", ") %>
+              </span>
+            </li>
+          </ul>
+        <% end %>
+      </li>
+    </ul>
   <% end %>
 </div>

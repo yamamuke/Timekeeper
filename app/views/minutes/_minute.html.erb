@@ -1,16 +1,3 @@
-<!--<div id="stopwatch">-->
-<!--  <span onclick=javascript:getStartTime();>-->
-<!--    <i class="fas fa-caret-square-right"></i>-->
-<!--  </span>-->
-<!--  <span id="startTime" class="align_v">00:00</span>-->
-<!--  <span onclick="javascript:getStopTime();">-->
-<!--    <i class="fas fa-stop-circle"></i>-->
-<!--  </span>-->
-<!--  <span id="stopTime" class="align_v">00:00</span>-->
-<!--  <span class="textfield">経過時間: </span>-->
-<!--  <span id="interval" class="align_v">0</span><span>min</span>-->
-<!--</div>-->
-
 <div class="mg10">
   <%= link_to new_minute_path, title: "New", class: "btn p-0", remote: true do %>
     <span class="btn btn-primary">新しいアイテム</span>
@@ -134,28 +121,14 @@
 <br>
 <hr>
 
-<%
-=begin %>
-<div id="history">
-  <h2>履歴</h2>
-  <% @array.each do |arr| %>
-    <a href="/minutes/?date=<%= arr %>"><%= arr.to_date.in_time_zone.localtime.strftime("%Y/%m/%d") %></a>
-    <% date = @minutes.where("start like ?", arr.to_date.in_time_zone.localtime.strftime("%Y-%m-%d") + '%') %>
-    <span id="category_hist">
-      <%= date.pluck(:category).uniq.join(", ") %>
-    </span>
-    <br>
-  <% end %>
-<%
-=end %>
-
 <div id="history">
   <h2>履歴</h2>
   <% @array_m.each do |month| %>
+    <% str_month = (month + "-01").to_date.in_time_zone.localtime.strftime("%Y/%m") %>
     <ul>
       <li>
         <span id="month">
-          <%= (month + "-01").to_date.in_time_zone.localtime.strftime("%Y/%m") %>   
+          <%= str_month %>   
         </span> 
         <% date_of_m = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", month + '%') %>
         <% date_of_m = date_of_m.sort {|x, y| x["start"] <=> y["start"]} %>
@@ -175,6 +148,26 @@
             </li>
           </ul>
         <% end %>
+        <div id="total_month">
+          <p class="total"><%= str_month %>のカテゴリー別合計  : </p>
+          <% month_hist = @minutes.where("to_char(start, 'YYYY-MM-DD') like ?", month + '%') %>
+          <% category_month_hist = month_hist.group(:category).sum(:total) %>
+          <% category_month_hist.each{|key, value| %>
+            <% h = value / 60 %>
+            <% min = value % 60 %>
+            <table class="table mt-0 mb-0">
+              <ul>
+                <li style="list-style: disc" class="time_category">
+                  <% if h != 0 %>
+                    <%= key + " : " + h.to_s + "h " + min.to_s + "min" %>
+                  <% else %>
+                    <%= key + " : " + min.to_s + "min" %>
+                  <% end %>
+                </li>
+              </ul>
+            </table>
+          <% } %>          
+        </div>   
       </li>
     </ul>
   <% end %>

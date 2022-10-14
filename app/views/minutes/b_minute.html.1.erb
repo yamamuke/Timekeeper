@@ -134,6 +134,9 @@
 <br>
 <hr>
 
+<%
+=begin %>
+#日付のみの一覧,の場合,月ごとよりwhere検索がシンプル
 <div id="history">
   <h2>履歴</h2>
   <% @array.each do |arr| %>
@@ -143,5 +146,58 @@
       <%= date.pluck(:category).uniq.join(", ") %>
     </span>
     <br>
+  <% end %>
+<%
+=end %>
+
+<div id="history">
+  <h2>履歴</h2>
+  <% @array_m.each do |month| %>
+    <% str_month = (month + "-01").to_date.in_time_zone.localtime.strftime("%Y/%m") %>
+    <ul>
+      <li>
+        <span id="month">
+          <%= str_month %>   
+        </span> 
+        <% date_of_m = @minutes.where("start like ?", month + '%') %>
+        <% date_of_m = date_of_m.sort {|x, y| x["start"] <=> y["start"]} %>
+        <% darray = [] %>
+        <% date_of_m.each do |item| %>
+          <% darray.push(item.start.strftime("%Y/%m/%d").to_s) %>
+        <% end %>
+        <% date_of_m = darray.uniq %>
+        <% date_of_m.each do |arr| %>
+          <ul>
+            <li>
+              <a href="/minutes/?date=<%= arr %>"><%= arr %></a>
+              <% date = @minutes.where("start like ?", arr.to_date.in_time_zone.localtime.strftime("%Y-%m-%d") + '%') %>
+              <span id="category_hist">
+                <%= date.pluck(:category).uniq.join(", ") %>
+              </span>
+            </li>
+          </ul>
+        <% end %>
+        <div id="total_month">
+          <p class="total"><%= str_month %>のカテゴリー別合計  : </p>
+          <% month_hist = @minutes.where("start like ?", month + '%') %>
+          <% category_month_hist = month_hist.group(:category).sum(:total) %>
+          <% category_month_hist.each{|key, value| %>
+            <% h = value / 60 %>
+            <% min = value % 60 %>
+            <table class="table mt-0 mb-0">
+              <ul>
+                <li style="list-style: disc" class="time_category">
+                  <% if h != 0 %>
+                    <%= key + " : " + h.to_s + "h " + min.to_s + "min" %>
+                  <% else %>
+                    <%= key + " : " + min.to_s + "min" %>
+                  <% end %>
+                </li>
+              </ul>
+            </table>
+          <% } %>          
+        </div>   
+      </li>
+    </ul>
   <% end %>
 </div>

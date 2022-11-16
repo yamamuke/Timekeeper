@@ -24,35 +24,35 @@
 <%
 =end %>
           <div class="form-group first-form-group">
-          <%= form.label :category %>
-          <%= form.text_field :category %>
+            <%= form.label :category %>
+            <%= form.text_field :category %>
           </div>
           
           <div class="form-group">
-          <%= form.label :content %>
-          <%= form.text_field :content %>
+            <%= form.label :content %>
+            <%= form.text_field :content %>
           </div>
           
           <div class="form-group">
-          <%= form.label :start %>
-          <%= form.datetime_select :start %>
+            <%= form.label :start %>
+            <%= form.datetime_select :start %>
           </div>
           
           <% if "#{params[:action].camelize}" != "New" %>
             <div class="form-group">
-            <%= form.label :stop %>
-            <%= form.datetime_select :stop %>
+              <%= form.label :stop %>
+              <%= form.datetime_select :stop %>
             </div>
             
             <div class="form-group">
-            <%#= form.label :total %>
-            <%= form.hidden_field :total %>
+              <%#= form.label :total %>
+              <%= form.hidden_field :total %>
             </div>
           <% end %>
           
           <div class="form-group">
-          <%#= form.label :user_id %>
-          <%= form.hidden_field :user_id %>
+            <%#= form.label :user_id %>
+            <%= form.hidden_field :user_id %>
           </div>
           
           <div class="modal-footer actions">

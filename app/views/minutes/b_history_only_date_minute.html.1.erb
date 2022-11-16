@@ -1,3 +1,16 @@
+<!--<div id="stopwatch">-->
+<!--  <span onclick=javascript:getStartTime();>-->
+<!--    <i class="fas fa-caret-square-right"></i>-->
+<!--  </span>-->
+<!--  <span id="startTime" class="align_v">00:00</span>-->
+<!--  <span onclick="javascript:getStopTime();">-->
+<!--    <i class="fas fa-stop-circle"></i>-->
+<!--  </span>-->
+<!--  <span id="stopTime" class="align_v">00:00</span>-->
+<!--  <span class="textfield">経過時間: </span>-->
+<!--  <span id="interval" class="align_v">0</span><span>min</span>-->
+<!--</div>-->
+
 <div class="mg10">
   <%= link_to new_minute_path, title: "New", class: "btn p-0", remote: true do %>
     <span class="btn btn-primary">新しいアイテム</span>
@@ -120,6 +133,22 @@
 <%= link_to "今日のリスト", minutes_path, class: "btn outline btn-primary" %>
 <br>
 <hr>
+
+<%
+=begin %>
+#日付のみの一覧の場合,月ごとよりwhere検索がシンプル
+<div id="history">
+  <h2>履歴</h2>
+  <% @array.each do |arr| %>
+    <a href="/minutes/?date=<%= arr %>"><%= arr.to_date.in_time_zone.localtime.strftime("%Y/%m/%d") %></a>
+    <% date = @minutes.where("start like ?", arr.to_date.in_time_zone.localtime.strftime("%Y-%m-%d") + '%') %>
+    <span id="category_hist">
+      <%= date.pluck(:category).uniq.join(", ") %>
+    </span>
+    <br>
+  <% end %>
+<%
+=end %>
 
 <div id="history">
   <h2>履歴</h2>

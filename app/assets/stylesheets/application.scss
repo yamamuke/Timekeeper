@@ -88,3 +88,19 @@ footer {
 .first-form-group {
   margin-top: 10px;
 }
+
+@media screen and (max-width: 992px) {
+  .bg-home {
+        background-color: white;
+  }
+  .navbar-toggler {
+    font-size: 15px;
+  }
+  .navbar-nav {
+    position: relative;
+  }
+  .nav-item {
+    position: absolute;
+    right: 10px;
+  }
+}

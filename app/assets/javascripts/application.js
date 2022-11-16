@@ -20,28 +20,29 @@
 //= require popper
 //= require bootstrap-sprockets
 
-let startTime;
-let stopTime;
+//以下ストップウォッチ用開始と終了時刻記録、使用しない
+// let startTime;
+// let stopTime;
 
-function getStartTime() {
-  startTime = new Date();
-  let hour = ("0" + startTime.getHours()).slice(-2);
-  let minute = ("0" + startTime.getMinutes()).slice(-2);
-  let time = hour + ":" + minute;
-  document.getElementById('startTime').innerHTML = time;
-};
+// function getStartTime() {
+//   startTime = new Date();
+//   let hour = ("0" + startTime.getHours()).slice(-2);
+//   let minute = ("0" + startTime.getMinutes()).slice(-2);
+//   let time = hour + ":" + minute;
+//   document.getElementById('startTime').innerHTML = time;
+// }
 
-function getStopTime() {
-  stopTime = new Date();
-  let hour = ("0" + stopTime.getHours()).slice(-2);
-  let minute = ("0" + stopTime.getMinutes()).slice(-2);
-  let time = hour + ":" + minute;
-  document.getElementById('stopTime').innerHTML = time;
-  let diff = stopTime - startTime
-  //経過分(minute)取得
-  const diffMinute = diff / (1000 * 60);
-  document.getElementById('interval').innerHTML = Math.floor(diffMinute);
-  //@minute.start= startTime;
-  //@minute.stop = stopTime;
-};
+// function getStopTime() {
+//   stopTime = new Date();
+//   let hour = ("0" + stopTime.getHours()).slice(-2);
+//   let minute = ("0" + stopTime.getMinutes()).slice(-2);
+//   let time = hour + ":" + minute;
+//   document.getElementById('stopTime').innerHTML = time;
+//   let diff = stopTime - startTime;
+//   //経過分(minute)取得
+//   const diffMinute = diff / (1000 * 60);
+//   document.getElementById('interval').innerHTML = Math.floor(diffMinute);
+//   //@minute.start= startTime;
+//   //@minute.stop = stopTime;
+// }
   

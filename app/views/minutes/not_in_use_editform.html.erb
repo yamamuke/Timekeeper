@@ -4,8 +4,7 @@
       <%= form_with(model: minute, remote: true) do |form| %>
         <div class="modal-header">
           <h5 class="modal-title"><%= "#{params[:action].camelize}" %></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">x
-          </button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">x</button>
         </div>
         <div class="modal-body">
           <span>※ 「カテゴリー」は入力必須項目です。</span>
@@ -33,22 +32,32 @@
             <%= form.text_field :content %>
           </div>
           
-          <div class="form-group">
-            <%= form.label :start %>
-            <%= form.datetime_select :start %>
-          </div>
-          
-          <% if "#{params[:action].camelize}" != "New" %>
+          <% if @minute.stop != @minute.start %>
+            <div class="form-group">
+              <%= form.label :start %>
+              <%= form.datetime_select :start %>
+            </div>
+            
             <div class="form-group">
               <%= form.label :stop %>
               <%= form.datetime_select :stop %>
             </div>
+          <% else %>
+            <div class="form-group">
+              <%= form.label :start %>
+              <%= form.datetime_select :start %>
+            </div>
             
             <div class="form-group">
-              <%#= form.label :total %>
-              <%= form.hidden_field :total %>
+              <%= form.label :stop %>
+              <%= form.datetime_select :stop %>
             </div>
           <% end %>
+          
+          <div class="form-group">
+            <%= form.label :total %>
+            <%= form.number_field 0 %>
+          </div>
           
           <div class="form-group">
             <%#= form.label :user_id %>

@@ -45,4 +45,17 @@
 //   //@minute.start= startTime;
 //   //@minute.stop = stopTime;
 // }
-  
+
+$(function() {
+  $('.btn-resume').on('click', function() {
+    $(this).toggleClass('pause');
+    $(this).children("i").removeClass('fa-play');
+    $(this).children("i").addClass('fa-pause pause');
+  });
+});
+
+// $(window).on('load', function (){
+//   if ($('#stopTime').text == '作業中') {
+//     $('#stopTime').text('テキスト変更テスト');
+//   }
+// });

@@ -86,3 +86,19 @@ h2 {
 #total_month {
   margin: 20px 0 0 40px;
 }
+
+.fa-play::after {
+  content: " 再開";
+}
+
+.fa-pause::after {
+  content: " 停止";
+}
+
+.btn-resume {
+  background-color: #BAD3FF;
+}
+
+.pause {
+  background-color: #C0C0C0;
+}

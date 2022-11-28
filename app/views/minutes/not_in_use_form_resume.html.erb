@@ -4,7 +4,7 @@
       <%= form_with(model: minute, remote: true) do |form| %>
         <div class="modal-header">
           <h5 class="modal-title"><%= "#{params[:action].camelize}" %></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">x
+          <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
           </button>
         </div>
         <div class="modal-body">
@@ -35,10 +35,10 @@
           
           <div class="form-group">
             <%= form.label :start %>
-            <%= form.datetime_select :start %>
+            <%= form.datetime_select @resume %>
           </div>
-          
-          <% if "#{params[:action].camelize}" != "New" %>
+
+          <% if "#{params[:action].camelize}" != "Resume" %>
             <div class="form-group">
               <%= form.label :stop %>
               <%= form.datetime_select :stop %>

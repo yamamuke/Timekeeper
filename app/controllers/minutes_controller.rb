@@ -38,10 +38,15 @@ class MinutesController < ApplicationController
     @minute = current_user.minutes.new
   end
 
+  def resume
+    @minute = Minute.create(category: 'test', content: 'test', start: Time.now, stop: nil, total: nil, user_id: current_user.id)
+    if @minute.save
+      redirect_to minutes_path
+    end
+  end
+  
   # GET /minutes/1/edit
   def edit
-    @minute.total = @minute.getTimeDiff
-    @minute.save
   end
 
   # POST /minutes
@@ -49,7 +54,7 @@ class MinutesController < ApplicationController
     @minute = current_user.minutes.new(minute_params)
     if @minute.save
       @status = true
-      @minute_new = @minute.start.strftime("%Y-%m-%d") 
+      @minute_new = @minute.start.strftime("%Y-%m-%d")
       redirect_to "/minutes/?date=#{@minute_new}"
     else
       @status = false
